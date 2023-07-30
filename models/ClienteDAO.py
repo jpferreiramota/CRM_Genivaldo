@@ -5,12 +5,12 @@ class ClienteDAO():
     # CRUD - Create, Retrieve, Update, Delete
     def inserir(self, cliente):
         try:
-            sql = "INSERT INTO Cliente(cpf, nome, " \
-                  "rua, bairro, numero, cep, telefone, email, sexo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            sql = "INSERT INTO Cliente(nome, " \
+                  "rua, bairro, numero, cep, telefone, email) VALUES (%s, %s, %s, %s, %s, %s, %s)"
 
             cursor = self.con.cursor()
-            cursor.execute(sql, (cliente.cpf, cliente.nome, cliente.rua,
-                                 cliente.bairro, cliente.numero, cliente.cep, cliente.telefone, cliente.email, cliente.sexo,))
+            cursor.execute(sql, (cliente.nome, cliente.rua,
+                                 cliente.bairro, cliente.numero, cliente.cep, cliente.telefone, cliente.email))
             self.con.commit()
             codigo = cursor.lastrowid
             return codigo
@@ -34,13 +34,13 @@ class ClienteDAO():
             cursor = self.con.cursor()
             if id != None:
                 # pegar somente uma cliente
-                sql = "SELECT * FROM cliente WHERE id=%s"
+                sql = "SELECT * FROM Cliente WHERE id=%s"
                 cursor.execute(sql, (id,))
                 clientes = cursor.fetchone()
                 return clientes
             else:
                 # pegar todas as clientes
-                sql = "SELECT * FROM cliente WHERE id>0"
+                sql = "SELECT * FROM Cliente WHERE id>0"
                 cursor.execute(sql)
                 clientes = cursor.fetchall()
                 return clientes
@@ -50,11 +50,11 @@ class ClienteDAO():
     def atualizar(self, cliente):
         try:
             sql = "UPDATE Cliente " \
-                  "SET cpf=%s, nome=%s, rua=%s, bairro=%s, cep=%s, numero=%s, telefone=%s, email=%s, sexo=%s WHERE id=%s"
+                  "SET nome=%s, rua=%s, bairro=%s, cep=%s, numero=%s, telefone=%s, email=%s WHERE id=%s"
 
             cursor = self.con.cursor()
-            cursor.execute(sql, (cliente.cpf, cliente.nome, cliente.rua, cliente.bairro,
-                                 cliente.cep, cliente.numero, cliente.telefone, cliente.email, cliente.sexo, cliente.id))
+            cursor.execute(sql, (cliente.nome, cliente.rua, cliente.bairro,
+                                 cliente.cep, cliente.numero, cliente.telefone, cliente.email, cliente.id))
             self.con.commit()
             return cursor.rowcount
         except:

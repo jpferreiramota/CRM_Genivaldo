@@ -31,13 +31,14 @@ ENGINE = InnoDB;
 -- Table `crmdb`.`Cliente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crmdb`.`Cliente` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(150) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `telefone` VARCHAR(25) NULL,
   `cep` VARCHAR(30) NOT NULL,
   `rua` VARCHAR(150) NOT NULL,
   `numero` INT NOT NULL,
+  `bairro` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -46,7 +47,7 @@ ENGINE = InnoDB;
 -- Table `crmdb`.`Registro`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crmdb`.`Registro` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `dt_registro` DATE NOT NULL,
   `observacao` VARCHAR(300) NULL,
   `Usuario_codigo` BIGINT NOT NULL,
@@ -71,7 +72,7 @@ ENGINE = InnoDB;
 -- Table `crmdb`.`Produto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `crmdb`.`Produto` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(150) NOT NULL,
   `marca` VARCHAR(150) NOT NULL,
   `qtd` INT NOT NULL,
@@ -80,9 +81,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `crmdb`.`Registo_Produto`
+-- Table `crmdb`.`Registro_Produto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `crmdb`.`Registo_Produto` (
+CREATE TABLE IF NOT EXISTS `crmdb`.`Registro_Produto` (
   `Registro_id` BIGINT NOT NULL,
   `Produto_id` BIGINT NOT NULL,
   `qtd` INT NOT NULL,

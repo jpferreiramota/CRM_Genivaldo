@@ -1,8 +1,6 @@
 class Cliente():
-    def __init__(self, cpf, nome, rua,
-                 bairro, numero, cep, telefone, email, sexo):
+    def __init__(self, nome, rua, bairro, numero, cep, telefone, email):
         self.id = 0
-        self.cpf = cpf
         self.nome = nome
         self.rua = rua
         self.bairro = bairro
@@ -10,7 +8,6 @@ class Cliente():
         self.cep = cep
         self.telefone = telefone
         self.email = email
-        self.sexo = sexo
 
     def getId(self):
         return self.id

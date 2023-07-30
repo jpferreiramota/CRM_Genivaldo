@@ -4,10 +4,10 @@ from flask import Flask, g, render_template,\
 from datetime import datetime
 import mysql.connector
 
-from models.funcionario import Funcionario
-from models.funcionarioDAO import FuncionarioDAO
-from models.cliente import Cliente
-from models.clienteDAO import ClienteDAO
+from models.Usuario import Usuario
+from models.UsuarioDAO import UsuarioDAO
+from models.Cliente import Cliente
+from models.ClienteDAO import ClienteDAO
 from models.compra import Compra
 from models.compraDAO import CompraDAO
 from models.produto import Produto
@@ -16,10 +16,6 @@ from models.compraproduto import Compraproduto
 from models.compraprodutoDAO import CompraprodutoDAO
 from models.comissao import Comissao
 from models.comissaoDAO import ComissaoDAO
-from models.ponto import Ponto
-from models.pontoDAO import PontoDAO
-from models.pontos import Pontos
-from models.pontosDAO import PontosDAO
 
 
 app = Flask(__name__, template_folder="templates")
@@ -28,7 +24,7 @@ app.secret_key = "senha123"
 DB_HOST = "localhost"
 DB_USER = "root"
 DB_PASS = ""
-DB_NAME = "db"
+DB_NAME = "crmdb"
 
 app.auth = {
     # acao: { perfil:permissao }
@@ -50,9 +46,9 @@ app.auth = {
     'listar_comissao': {0:1, 1:1},
     'atualizar_comissao': {0:1, 1:1},
     'deletar_comissao': {0:1, 1:1},
-    'listar_funcionario': {0:1, 1:1},
-    'atualizar_funcionario': {0:1, 1:1},
-    'deletar_funcionario': {0:1, 1:1}
+    'listar_usuario': {0:1, 1:1},
+    'atualizar_usuario': {0:1, 1:1},
+    'deletar_usuario': {0:1, 1:1}
 }
 
 @app.before_request
@@ -66,10 +62,6 @@ def autorizacao():
     if acao in list(acoes):
         if session.get('logado') is None:
             return redirect(url_for('login'))
-        else:
-            tipo = session['logado']['tipo']
-            if app.auth[acao][tipo]==0:
-                return redirect(url_for('index'))
 
 def get_db():
     db = getattr(g, '_database', None)
@@ -92,32 +84,27 @@ def close_connection(exception):
 
 @app.route('/index')
 def index():
-    dao = PontoDAO(get_db())
-    ponto = dao.quantidade(session['logado']['id'])[0]
     nome = session['logado']['nome']
-    func_id = session['logado']['id']
-    tipo = session['logado']['tipo']
-    return render_template("index.html", ponto = ponto, nome=nome, tipo=tipo, func_id=func_id)
+    return render_template("index.html", nome=nome)
 
 
-#--------FUNCIONARIO-----------
+#--------USUÁRIO-----------
 
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
-        nome = request.form['nome']
+        email = request.form['email']
         senha = request.form['senha']
 
         # Verificar dados
-        dao = FuncionarioDAO(get_db())
-        usuario = dao.autenticar(nome, senha)
+        dao = UsuarioDAO(get_db())
+        usuario = dao.autenticar(email, senha)
 
         if usuario is not None:
             session['logado'] = {
                 'id': usuario[0],
-                'nome': usuario[1],
-                'tipo': usuario[6]
+                'nome': usuario[1]
             }
             criar_comissao()
             return redirect(url_for('index'))
@@ -146,14 +133,13 @@ def cadastrar():
         # valor = request.form['campoHTML']
         nome = request.form['nome']
         senha = request.form['senha']
-        salario = request.form['salario']
-        dt_nascimento = request.form['dt_nascimento']
+        email = request.form['email']
         telefone = request.form['telefone']
 
-        funcionario = Funcionario(nome, senha, salario, dt_nascimento, telefone, 1)
+        usuario = Usuario(nome, senha, email, telefone)
 
-        dao = FuncionarioDAO(get_db())
-        codigo = dao.inserir(funcionario)
+        dao = UsuarioDAO(get_db())
+        codigo = dao.inserir(usuario)
 
         if codigo > 0:
             msg = ("Cadastrado com sucesso!")
@@ -164,52 +150,50 @@ def cadastrar():
     return render_template("cadastrar.html", titulo=vartitulo, msg=msg)
 
 
-@app.route('/listar_funcionario', methods=['GET', 'POST'])
-def listar_funcionario():
-    dao = FuncionarioDAO(get_db())
-    funcionarios = dao.listar()
-    return render_template("lista-funcionario.html", funcionarios=funcionarios)
+@app.route('/listar_usuario', methods=['GET', 'POST'])
+def listar_usuario():
+    dao = UsuarioDAO(get_db())
+    Usuarios = dao.listar()
+    return render_template("lista-usuario.html", Usuarios=Usuarios)
 
 
 
-@app.route('/atualizar-funcionario-<id>', methods=['GET', 'POST'])
-def atualizar_funcionario(id):
-    dao = FuncionarioDAO(get_db())
-    funcionario = dao.buscar(id)
+@app.route('/atualizar-usuario-<id>', methods=['GET', 'POST'])
+def atualizar_usuario(id):
+    dao = UsuarioDAO(get_db())
+    Usuario = dao.buscar(id)
 
     if request.method == 'POST':
         nome = request.form['nome']
-        salario = request.form['salario']
-        dt_nascimento = request.form['dt_nascimento']
+        email = request.form['email']
         telefone = request.form['telefone']
 
         print(nome)
-        print(funcionario[2])
-        print(salario)
-        print(dt_nascimento)
+        print(Usuario[2])
+        print(email)
         print(telefone)
-        print(funcionario[6])
+        print(Usuario[6])
 
 
-        funcionario = Funcionario(nome, funcionario[2], salario, dt_nascimento, telefone, funcionario[6])
-        funcionario.setId(id)
-        codigo = dao.atualizar(funcionario)
+        Usuario = Usuario(nome, Usuario[2], email, telefone, Usuario[6])
+        Usuario.setId(id)
+        codigo = dao.atualizar(Usuario)
 
         if codigo > 0:
             msg = ("Atualizado com sucesso!")
         else:
             msg = ("Erro ao atualizar!")
 
-        return redirect(url_for('listar_funcionario'))
-    funcionario_db = dao.listar(id)
-    return render_template('atualizar-funcionario.html', funcionario=funcionario_db)
+        return redirect(url_for('listar_usuario'))
+    Usuario_db = dao.listar(id)
+    return render_template('atualizar-usuario.html', Usuario=Usuario_db)
 
 
-@app.route('/deletar_funcionario/<id>', methods=['GET', 'POST'])
-def deletar_funcionario(id):
-    dao = FuncionarioDAO(get_db())
+@app.route('/deletar_usuario/<id>', methods=['GET', 'POST'])
+def deletar_usuario(id):
+    dao = UsuarioDAO(get_db())
     dao.excluir(id)
-    return redirect(url_for('listar_funcionario'))
+    return redirect(url_for('listar_usuario'))
 
 
 #--------CLIENTE-----------
@@ -219,7 +203,6 @@ def deletar_funcionario(id):
 def cadastrar_cliente():
     msg = ''
     if request.method == 'POST':
-        cpf = request.form['cpf']
         nome = request.form['nome']
         rua = request.form['rua']
         bairro = request.form['bairro']
@@ -227,10 +210,9 @@ def cadastrar_cliente():
         numero = request.form['numero']
         telefone = request.form['telefone']
         email = request.form['email']
-        sexo = request.form['sexo']
 
-        cliente = Cliente(cpf, nome, rua, bairro, \
-                           numero, cep, telefone, email, sexo)
+        cliente = Cliente(nome, rua, bairro, \
+                           numero, cep, telefone, email)
 
         dao = ClienteDAO(get_db())
         codigo = dao.inserir(cliente)
@@ -255,7 +237,6 @@ def atualizar_cliente(id):
     dao = ClienteDAO(get_db())
 
     if request.method == 'POST':
-        cpf = request.form['cpf']
         nome = request.form['nome']
         rua = request.form['rua']
         bairro = request.form['bairro']
@@ -263,9 +244,8 @@ def atualizar_cliente(id):
         numero = request.form['numero']
         telefone = request.form['telefone']
         email = request.form['email']
-        sexo = request.form['sexo']
 
-        cliente = Cliente(cpf, nome, rua, bairro, cep, numero, telefone, email, sexo)
+        cliente = Cliente(nome, rua, bairro, cep, numero, telefone, email)
         cliente.setId(id)
         codigo = dao.atualizar(cliente)
 

@@ -210,11 +210,11 @@
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">Funcionários</div>
+                <div data-i18n="User interface">Usuários</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{{ url_for('listar_funcionario') }}" class="menu-link">
+                  <a href="{{ url_for('listar_usuario') }}" class="menu-link">
                     <div data-i18n="Basic">Listar</div>
                   </a>
                 </li>
@@ -257,20 +257,6 @@
                   <div class="card mb-4">
                     <div class="card-body">
                       <form id="formAuthentication" class="mb-3" action="{{ url_for('cadastrar_cliente') }}" method="POST">
-                        <div class="mb-3 row">
-                          <label for="cpf" class="col-md-2 col-form-label">CPF</label>
-                          <div class="col-md-10">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="cpf"
-                              name="cpf"
-                              placeholder="Digite seu CPF"
-                              autofocus
-                              required
-                            />
-                          </div>
-                        </div>
                         <div class="mb-3 row">
                           <label for="nome" class="col-md-2 col-form-label">Nome</label>
                           <div class="col-md-10">
@@ -367,17 +353,6 @@
                               autofocus
                               required
                             />
-                          </div>
-                        </div>
-                        <div class="mb-3 row">
-                          <label for="sexo" class="col-md-2 col-form-label">Sexo</label>
-                          <div class="col-md-10">
-                            <select type="text" id="sexo" name="sexo" class="form-select" aria-label="Default select example" autofocus required>
-                              <option selected>Selecione uma opção</option>
-                              <option value="Masculino">Masculino</option>
-                              <option value="Feminino">Feminino</option>
-                              <option value="Indefinido">Indefinido</option>
-                            </select>
                           </div>
                         </div>
                         <div class="mb-3">
