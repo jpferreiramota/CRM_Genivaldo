@@ -22,10 +22,10 @@ class UsuarioDAO():
             sql = "SELECT * FROM Usuario WHERE email=%s AND senha=%s"
 
             cursor = self.con.cursor()
-            cursor.execute(sql, (email, senha))
+            cursor.execute(sql, (email, senha,))
 
-            Usuario = cursor.fetchone()  # lastrowid, fetchone, fetchall
-            return  Usuario
+            usuario = cursor.fetchone()  # lastrowid, fetchone, fetchall
+            return  usuario
         except:
             return None
 
@@ -77,6 +77,15 @@ class UsuarioDAO():
             return cursor.rowcount
         except:
             return 0
+
+    def Buscar_email(self, email):
+        sql = "SELECT * FROM Usuario WHERE email=%s"
+
+        cursor = self.con.cursor()
+        cursor.execute(sql, (email,))
+
+        return cursor.fetchone()
+
 
 
 

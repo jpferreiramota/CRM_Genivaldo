@@ -20,7 +20,7 @@ USE `crmdb` ;
 CREATE TABLE IF NOT EXISTS `crmdb`.`Usuario` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(150) NOT NULL,
-  `senha` VARCHAR(45) NOT NULL,
+  `senha` VARCHAR(200) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `telefone` VARCHAR(25) NULL,
   PRIMARY KEY (`id`))

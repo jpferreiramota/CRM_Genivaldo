@@ -63,7 +63,7 @@ class ProdutoDAO():
             sql = "UPDATE Produto SET nome=%s, qt_estoque=%s, preco=%s, fabricante=%s WHERE id=%s"
 
             cursor = self.con.cursor()
-            cursor.execute(sql, (produto.nome, produto.qt_estoque, produto.preco, produto.fabricante))
+            cursor.execute(sql, (produto.nome, produto.qt_estoque, produto.preco, produto.fabricante, produto.id))
             self.con.commit()
             return cursor.rowcount
         except:

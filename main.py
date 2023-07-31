@@ -1,8 +1,18 @@
 from flask import Flask, g, render_template,\
-    request, redirect, url_for, session
+    request, redirect, url_for, session, flash
 
 from datetime import datetime
+from email.message import EmailMessage
 import mysql.connector
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
+import requests
+import os
+import ssl
+
+import hashlib
+import json
+import smtplib
 
 from models.Usuario import Usuario
 from models.UsuarioDAO import UsuarioDAO
@@ -17,6 +27,8 @@ from models.compraprodutoDAO import CompraprodutoDAO
 from models.comissao import Comissao
 from models.comissaoDAO import ComissaoDAO
 
+
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__, template_folder="templates")
 app.secret_key = "senha123"
@@ -529,5 +541,85 @@ def listar_ponto():
     return render_template("lista-ponto.html", pontos=pontos)
 
 
+#--------GOOGLE API-----------
+
+
+@app.route('/login_google')
+def login_google():
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+        'client_secret.json',
+        scopes=['https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile', 'openid'])
+
+    flow.redirect_uri = 'http://localhost/retorno'
+
+    authorization_url, state = flow.authorization_url(access_type='offline', include_granted_scopes='true')
+
+    #return flask.redirect(authorization_url)
+    return redirect(authorization_url)
+
+@app.route('/retorno')
+def retorno():
+    state = request.args.get('state')
+    code = request.args.get('code')
+
+    if code is None or code =='':
+        flash("Erro ao logar com conta do google.", "danger")
+        return redirect(url_for('login'))
+
+
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+        'client_secret.json',
+        scopes=['https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/userinfo.profile', 'openid'],
+        state=state)
+    flow.redirect_uri = url_for('retorno', _external=True)
+
+    authorization_response = request.url
+    flow.fetch_token(authorization_response=authorization_response)
+
+    credentials = flow.credentials
+
+    resposta_api = requests.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + credentials.token)
+    info_usuario = resposta_api.json()
+
+    email_busc = str(info_usuario['email'])
+    print((info_usuario['email']))
+
+    dao = UsuarioDAO(get_db())
+
+    user = dao.Buscar_email(email_busc)
+    print(user)
+
+    if user is None:
+        hash = hashlib.sha512()
+        senha = os.urandom(50)
+        secret = app.config['SECRET_KEY']
+        hash.update(f'{secret}{senha}'.encode('utf-8'))
+        senha_criptografada = hash.hexdigest()
+
+        usuario = Usuario( info_usuario['name'], senha_criptografada, info_usuario['email'], "")
+
+        id = None
+
+        if usuario.nome and usuario.email and usuario.senha:
+            id = dao.inserir(usuario)
+
+        if id is None or id <= 0:
+            flash("Erro ao cadastrar usuário.", "danger")
+            return redirect(url_for("login"))
+        else:
+            user = dao.autenticar(usuario.email, usuario.senha)
+            print(user)
+
+    session['logado'] = {
+        'id': user[0],
+        'nome': user[1],
+    }
+
+
+    revoke = requests.post('https://oauth2.googleapis.com/revoke',
+                               params={'token': credentials.token},
+                               headers={'content-type': 'application/x-www-form-urlencoded'})
+    return redirect('index')
+
 if __name__=='__main__':
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    app.run(host="0.0.0.0", port=80, debug=True)
