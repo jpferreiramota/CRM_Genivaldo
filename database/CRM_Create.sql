@@ -74,8 +74,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `crmdb`.`Produto` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(150) NOT NULL,
-  `marca` VARCHAR(150) NOT NULL,
-  `qtd` INT NOT NULL,
+  `fabricante` VARCHAR(150) NOT NULL,
+  `qt_estoque` INT NOT NULL,
+  `preco` INT(11) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Editar/Funcionario - PrimeAdmin</title>
+    <title>Editar/Funcionario - CRM</title>
 
     <meta name="description" content="" />
 
@@ -170,7 +170,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Authentications">Produtos</div>
+                <div data-i18n="Authentications">Estoque</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
@@ -185,24 +185,24 @@
                 </li>
               </ul>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Misc">Compras</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Cadastrar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="{{ url_for('listar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Listar</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+<!--            <li class="menu-item">-->
+<!--              <a href="javascript:void(0);" class="menu-link menu-toggle">-->
+<!--                <i class="menu-icon tf-icons bx bx-detail"></i>-->
+<!--                <div data-i18n="Misc">Compras</div>-->
+<!--              </a>-->
+<!--              <ul class="menu-sub">-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Cadastrar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('listar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Listar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </li>-->
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Administração</span></li>
 
@@ -210,11 +210,11 @@
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">Funcionários</div>
+                <div data-i18n="User interface">Usuários</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{{ url_for('listar_funcionario') }}" class="menu-link">
+                  <a href="{{ url_for('listar_usuario') }}" class="menu-link">
                     <div data-i18n="Basic">Listar</div>
                   </a>
                 </li>
@@ -250,14 +250,14 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Editar /</span> Funcionário</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Editar /</span> Usuário</h4>
 
               <div class="row">
                 <div class="col-xl-6">
                   <!-- HTML5 Inputs -->
                   <div class="card mb-4">
                     <div class="card-body">
-                      <form id="formAuthentication" class="mb-3" action="{{ url_for('atualizar_funcionario', id = funcionario[0]) }}" method="POST">
+                      <form id="formAuthentication" class="mb-3" action="{{ url_for('atualizar_usuario', id = Usuario[0]) }}" method="POST">
                         <div class="mb-3 row">
                           <label for="nome" class="col-md-2 col-form-label">Nome</label>
                           <div class="col-md-10">
@@ -266,7 +266,7 @@
                               class="form-control"
                               id="nome"
                               name="nome"
-                              value="{{ funcionario[1] }}"
+                              value="{{ Usuario[1] }}"
                               placeholder="Digite seu nome"
                               autofocus
                               required
@@ -274,30 +274,30 @@
                           </div>
                         </div>
                         <div class="mb-3 row">
-                          <label for="salario" class="col-md-2 col-form-label">Salário</label>
+                          <label for="senha" class="col-md-2 col-form-label">Senha</label>
                           <div class="col-md-10">
                             <input
-                              type="text"
+                              type="password"
                               class="form-control"
-                              id="salario"
-                              name="salario"
-                              value="{{ funcionario[3] }}"
-                              placeholder="Digite seu salário"
+                              id="senha"
+                              name="senha"
+                              value="{{ Usuario[2] }}"
+                              placeholder="Digite sua senha"
                               autofocus
                               required
                             />
                           </div>
                         </div>
                         <div class="mb-3 row">
-                          <label for="dt_nascimento" class="col-md-2 col-form-label">Data de Nascimento</label>
+                          <label for="email" class="col-md-2 col-form-label">E-mail</label>
                           <div class="col-md-10">
                             <input
-                              type="text"
+                              type="email"
                               class="form-control"
-                              id="dt_nascimento"
-                              name="dt_nascimento"
-                              value="{{ funcionario[4] }}"
-                              placeholder="Informe sua data de nascimento"
+                              id="email"
+                              name="email"
+                              value="{{ Usuario[3] }}"
+                              placeholder="Informe seu E-mail"
                               autofocus
                               required
                             />
@@ -311,7 +311,7 @@
                               class="form-control"
                               id="telefone"
                               name="telefone"
-                              value="{{ funcionario[5] }}"
+                              value="{{ Usuario[4] }}"
                               placeholder="Informe seu telefone"
                               autofocus
                               required

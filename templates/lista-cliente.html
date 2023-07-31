@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Lista de clientes - PrimeAdmin</title>
+    <title>Lista de clientes - CRM</title>
 
     <meta name="description" content="" />
 
@@ -127,7 +127,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">PrimeAdmin</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">CRM</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -170,7 +170,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Authentications">Produtos</div>
+                <div data-i18n="Authentications">Estoque</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
@@ -185,24 +185,24 @@
                 </li>
               </ul>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Misc">Compras</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Cadastrar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="{{ url_for('listar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Listar</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+<!--            <li class="menu-item">-->
+<!--              <a href="javascript:void(0);" class="menu-link menu-toggle">-->
+<!--                <i class="menu-icon tf-icons bx bx-detail"></i>-->
+<!--                <div data-i18n="Misc">Compras</div>-->
+<!--              </a>-->
+<!--              <ul class="menu-sub">-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Cadastrar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('listar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Listar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </li>-->
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Administração</span></li>
 
@@ -210,11 +210,11 @@
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">Funcionários</div>
+                <div data-i18n="User interface">Usuários</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{{ url_for('listar_funcionario') }}" class="menu-link">
+                  <a href="{{ url_for('listar_usuario') }}" class="menu-link">
                     <div data-i18n="Basic">Listar</div>
                   </a>
                 </li>
@@ -258,16 +258,13 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th>CPF</th>
                           <th>Nome</th>
-                          <th>Rua</th>
-                          <th>Bairro</th>
-                          <th>CEP</th>
-                          <th>Número</th>
-                          <th>Telefone</th>
                           <th>Email</th>
-                          <th>Sexo</th>
-                          <th>Opção</th>
+                          <th>Telefone</th>
+                          <th>CEP</th>
+                          <th>Rua</th>
+                          <th>Número</th>
+                          <th>Bairro</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -286,11 +283,7 @@
                             <td>{{ cliente[9] }}</td>
                             <td>
                               <a class="dropdown-item"href="{{ url_for('atualizar_cliente', id=cliente[0]) }}"
-                                ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                              >
-                              <a class="dropdown-item" href="{{ url_for('deletar_cliente', id=cliente[0]) }}"
-                                ><i class="bx bx-trash me-1"></i> Deletar</a
-                              >
+                                ><i class="bx bx-edit-alt me-1"></i> Editar</a>
                             </td>
                           </tr>
                         {% endfor %}

@@ -3,13 +3,13 @@ class UsuarioDAO():
         self.con = con
 
     # CRUD - Create, Retrieve, Update, Delete
-    def inserir(self, Usuario):
+    def inserir(self, usuario):
         try:
             sql = "INSERT INTO Usuario(nome, senha, " \
                   "email, telefone) VALUES (%s, %s, %s, %s)"
 
             cursor = self.con.cursor()
-            cursor.execute(sql, (Usuario.nome, Usuario.senha, Usuario.email, Usuario.telefone))
+            cursor.execute(sql, (usuario.nome, usuario.senha, usuario.email, usuario.telefone))
             self.con.commit()
 
             codigo = cursor.lastrowid
@@ -47,12 +47,12 @@ class UsuarioDAO():
         except:
             return None
 
-    def atualizar(self, Usuario):
+    def atualizar(self, usuario):
         try:
             sql = "UPDATE Usuario SET nome=%s, email=%s, telefone=%s WHERE id=%s"
 
             cursor = self.con.cursor()
-            cursor.execute(sql, (Usuario.nome, Usuario.email, Usuario.telefone, Usuario.id))
+            cursor.execute(sql, (usuario.nome, usuario.email, usuario.telefone, usuario.id))
             self.con.commit()
             return cursor.rowcount
         except:

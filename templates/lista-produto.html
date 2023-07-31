@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Lista de produtos - PrimeAdmin</title>
+    <title>Lista de produtos - CRM</title>
 
     <meta name="description" content="" />
 
@@ -127,7 +127,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">PrimeAdmin</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">CRM</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -170,7 +170,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Authentications">Produtos</div>
+                <div data-i18n="Authentications">Estoque</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
@@ -185,24 +185,24 @@
                 </li>
               </ul>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Misc">Compras</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Cadastrar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="{{ url_for('listar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Listar</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+<!--            <li class="menu-item">-->
+<!--              <a href="javascript:void(0);" class="menu-link menu-toggle">-->
+<!--                <i class="menu-icon tf-icons bx bx-detail"></i>-->
+<!--                <div data-i18n="Misc">Compras</div>-->
+<!--              </a>-->
+<!--              <ul class="menu-sub">-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Cadastrar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('listar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Listar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </li>-->
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Administração</span></li>
 
@@ -210,11 +210,11 @@
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">Funcionários</div>
+                <div data-i18n="User interface">Usuários</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{{ url_for('listar_funcionario') }}" class="menu-link">
+                  <a href="{{ url_for('listar_usuario') }}" class="menu-link">
                     <div data-i18n="Basic">Listar</div>
                   </a>
                 </li>
@@ -249,7 +249,7 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Lista de</span> Produtos</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Lista de</span> Estoque</h4>
               <form id="formAuthentication" class="mb-3" action="{{ url_for('listar_produto') }}" method="POST">
               <!-- Bordered Table -->
               <div class="card">
@@ -266,9 +266,9 @@
                               <i class='bx bx-down-arrow-alt'></i>
                             </a>
                           </th>
+                          <th>Fabricante</th>
                           <th>Quantidade</th>
-                          <th>Preço Unid. (R$)</th>
-                          <th>Fabricante
+                          <th>Preço Unid. (R$)
                             <a href="/listar_produto-{{ 'fab_asc' }}" >
                               <i class='bx bx-up-arrow-alt'></i>
                             </a>
@@ -276,9 +276,6 @@
                               <i class='bx bx-down-arrow-alt'></i>
                             </a>
                           </th>
-                          <th>Estado/UF</th>
-                          <th>Tempo de uso (dias)</th>
-                          <th>Opção</th>
                         </tr>
                       </thead>
                       <tbody>

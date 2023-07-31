@@ -10,8 +10,8 @@ from models.Cliente import Cliente
 from models.ClienteDAO import ClienteDAO
 from models.compra import Compra
 from models.compraDAO import CompraDAO
-from models.produto import Produto
-from models.produtoDAO import ProdutoDAO
+from models.Produto import Produto
+from models.ProdutoDAO import ProdutoDAO
 from models.compraproduto import Compraproduto
 from models.compraprodutoDAO import CompraprodutoDAO
 from models.comissao import Comissao
@@ -161,23 +161,16 @@ def listar_usuario():
 @app.route('/atualizar-usuario-<id>', methods=['GET', 'POST'])
 def atualizar_usuario(id):
     dao = UsuarioDAO(get_db())
-    Usuario = dao.buscar(id)
 
     if request.method == 'POST':
         nome = request.form['nome']
+        senha = request.form['senha']
         email = request.form['email']
         telefone = request.form['telefone']
 
-        print(nome)
-        print(Usuario[2])
-        print(email)
-        print(telefone)
-        print(Usuario[6])
-
-
-        Usuario = Usuario(nome, Usuario[2], email, telefone, Usuario[6])
-        Usuario.setId(id)
-        codigo = dao.atualizar(Usuario)
+        usuario = Usuario(nome, senha, email, telefone)
+        usuario.setId(id)
+        codigo = dao.atualizar(usuario)
 
         if codigo > 0:
             msg = ("Atualizado com sucesso!")
@@ -245,7 +238,8 @@ def atualizar_cliente(id):
         telefone = request.form['telefone']
         email = request.form['email']
 
-        cliente = Cliente(nome, rua, bairro, cep, numero, telefone, email)
+        cliente = Cliente(nome, rua, bairro, \
+                          numero, cep, telefone, email)
         cliente.setId(id)
         codigo = dao.atualizar(cliente)
 
@@ -270,10 +264,8 @@ def cadastrar_produto():
         qt_estoque = request.form['qt_estoque']
         preco = request.form['preço']
         fabricante = request.form['fabricante']
-        estado = request.form['estado']
-        tempo_de_uso = request.form['tempo_de_uso']
 
-        produto = Produto(nome, qt_estoque, preco, fabricante, estado, tempo_de_uso, 0)
+        produto = Produto(nome, qt_estoque, preco, fabricante)
 
         dao = ProdutoDAO(get_db())
         codigo = dao.inserir(produto)
@@ -295,12 +287,12 @@ def listar_produto():
     return render_template("lista-produto.html", produtos=produtos)
 
 
-@app.route('/listar_produto-<string:opc>', methods=['GET', 'POST'])
-def ordenar_produto(opc):
-    dao = ProdutoDAO(get_db())
-    produtos = dao.ordenar(opc)
-    verifica_quantidade()
-    return render_template("lista-produto.html", produtos=produtos)
+# @app.route('/listar_produto-<string:opc>', methods=['GET', 'POST'])
+# def ordenar_produto(opc):
+#     dao = ProdutoDAO(get_db())
+#     produtos = dao.ordenar(opc)
+#     verifica_quantidade()
+#     return render_template("lista-produto.html", produtos=produtos)
 
 
 
@@ -318,13 +310,11 @@ def atualizar_produto(id):
 
     if request.method == 'POST':
         nome = request.form['nome']
+        fabricante = request.form['fabricante']
         qt_estoque = request.form['qt_estoque']
         preco = request.form['preco']
-        fabricante = request.form['fabricante']
-        estado = request.form['estado']
-        tempo_de_uso = request.form['tempo_de_uso']
 
-        produto = Produto(nome, qt_estoque, preco, fabricante, estado, tempo_de_uso, 0)
+        produto = Produto(nome, qt_estoque, preco, fabricante)
         produto.setId(id)
         codigo = dao.atualizar(produto)
 

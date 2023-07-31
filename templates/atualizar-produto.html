@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Editar/Cliente - PrimeAdmin</title>
+    <title>Editar/Cliente - CRM</title>
 
     <meta name="description" content="" />
 
@@ -170,7 +170,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Authentications">Produtos</div>
+                <div data-i18n="Authentications">Estoque</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
@@ -185,24 +185,24 @@
                 </li>
               </ul>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Misc">Compras</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Cadastrar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="{{ url_for('listar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Listar</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+<!--            <li class="menu-item">-->
+<!--              <a href="javascript:void(0);" class="menu-link menu-toggle">-->
+<!--                <i class="menu-icon tf-icons bx bx-detail"></i>-->
+<!--                <div data-i18n="Misc">Compras</div>-->
+<!--              </a>-->
+<!--              <ul class="menu-sub">-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Cadastrar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('listar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Listar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </li>-->
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Administração</span></li>
 
@@ -210,11 +210,11 @@
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">Funcionários</div>
+                <div data-i18n="User interface">Usuários</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{{ url_for('listar_funcionario') }}" class="menu-link">
+                  <a href="{{ url_for('listar_usuario') }}" class="menu-link">
                     <div data-i18n="Basic">Listar</div>
                   </a>
                 </li>
@@ -281,7 +281,7 @@
                               class="form-control"
                               id="qt_estoque"
                               name="qt_estoque"
-                              value="{{ produto[2] }}"
+                              value="{{ produto[3] }}"
                               placeholder="Digite a quantidade"
                               autofocus
                               required
@@ -296,7 +296,7 @@
                               class="form-control"
                               id="preco"
                               name="preco"
-                              value="{{ produto[3] }}"
+                              value="{{ produto[4] }}"
                               placeholder="Informe o preço"
                               autofocus
                               required
@@ -311,38 +311,8 @@
                               class="form-control"
                               id="fabricante"
                               name="fabricante"
-                              value="{{ produto[4] }}"
+                              value="{{ produto[2] }}"
                               placeholder="Informe o fabricante"
-                              autofocus
-                              required
-                            />
-                          </div>
-                        </div>
-                        <div class="mb-3 row">
-                          <label for="estado" class="col-md-2 col-form-label">Estado</label>
-                          <div class="col-md-10">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="estado"
-                              name="estado"
-                              value="{{ produto[5] }}"
-                              placeholder="Informe o estado"
-                              autofocus
-                              required
-                            />
-                          </div>
-                        </div>
-                        <div class="mb-3 row">
-                          <label for="tempo_de_uso" class="col-md-2 col-form-label">Tempo de uso</label>
-                          <div class="col-md-10">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="tempo_de_uso"
-                              name="tempo_de_uso"
-                              value="{{ produto[6] }}"
-                              placeholder="Informe o tempo de uso"
                               autofocus
                               required
                             />

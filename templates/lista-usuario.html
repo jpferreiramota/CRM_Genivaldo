@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Lista de Funcionários - PrimeAdmin</title>
+    <title>Lista de Usuários - CRM</title>
 
     <meta name="description" content="" />
 
@@ -127,7 +127,7 @@
                   </g>
                 </svg>
               </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">PrimeAdmin</span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">CRM</span>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -170,7 +170,7 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Authentications">Produtos</div>
+                <div data-i18n="Authentications">Estoque</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
@@ -185,24 +185,24 @@
                 </li>
               </ul>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Misc">Compras</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Cadastrar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="{{ url_for('listar_compra') }}" class="menu-link">
-                    <div data-i18n="Basic">Listar</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+<!--            <li class="menu-item">-->
+<!--              <a href="javascript:void(0);" class="menu-link menu-toggle">-->
+<!--                <i class="menu-icon tf-icons bx bx-detail"></i>-->
+<!--                <div data-i18n="Misc">Compras</div>-->
+<!--              </a>-->
+<!--              <ul class="menu-sub">-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('cadastrar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Cadastrar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--                <li class="menu-item">-->
+<!--                  <a href="{{ url_for('listar_compra') }}" class="menu-link">-->
+<!--                    <div data-i18n="Basic">Listar</div>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </li>-->
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Administração</span></li>
 
@@ -210,11 +210,11 @@
             <li class="menu-item">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
-                <div data-i18n="User interface">Funcionários</div>
+                <div data-i18n="User interface">Usuários</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{{ url_for('listar_funcionario') }}" class="menu-link">
+                  <a href="{{ url_for('listar_usuario') }}" class="menu-link">
                     <div data-i18n="Basic">Listar</div>
                   </a>
                 </li>
@@ -249,7 +249,7 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Lista de</span> Funcionários</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Lista de</span> Usuários</h4>
 
               <!-- Bordered Table -->
               <div class="card">
@@ -259,24 +259,21 @@
                       <thead>
                         <tr>
                           <th>Nome</th>
-                          <th>Salário</th>
-                          <th>Data de Nascimento</th>
+                          <th>E-mail</th>
                           <th>Telefone</th>
-                          <th>Opção</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {% for funcionario in funcionarios %}
+                        {% for Usuario in Usuarios %}
                         <tr>
-                          <td>{{ funcionario[1] }}</td>
-                          <td>{{ funcionario[3] }}</td>
-                          <td>{{ funcionario[4] }}</td>
-                          <td>{{ funcionario[5] }}</td>
+                          <td>{{ Usuario[1] }}</td>
+                          <td>{{ Usuario[3] }}</td>
+                          <td>{{ Usuario[4] }}</td>
                           <td>
-                            <a class="dropdown-item" href="{{ url_for('atualizar_funcionario', id = funcionario[0]) }}"
+                            <a class="dropdown-item" href="{{ url_for('atualizar_usuario', id = Usuario[0]) }}"
                               ><i class="bx bx-edit-alt me-1"></i> Editar</a
                             >
-                            <a class="dropdown-item" href="{{ url_for('deletar_funcionario', id = funcionario[0]) }}"
+                            <a class="dropdown-item" href="{{ url_for('deletar_usuario', id = Usuario[0]) }}"
                               ><i class="bx bx-trash me-1"></i> Deletar</a
                             >
                           </td>
