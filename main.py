@@ -42,6 +42,7 @@ app.auth = {
     # acao: { perfil:permissao }
     'index': {0:1, 1:1},
     'logout': {0:1, 1:1},
+    'carrinho': {0:1, 1:1},
     'cadastrar_cliente': {0:1, 1:1},
     'listar_cliente': {0:1, 1:1},
     'atualizar_cliente': {0:1, 1:1},
@@ -98,6 +99,10 @@ def close_connection(exception):
 def index():
     nome = session['logado']['nome']
     return render_template("index.html", nome=nome)
+
+@app.route('/carrinho')
+def carrinho():
+    return render_template("carrinho.html")
 
 
 #--------USUÁRIO-----------
